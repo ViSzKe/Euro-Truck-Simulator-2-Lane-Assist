@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.760037444677">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.760038839353">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -11,7 +11,7 @@
     <!-- Primary Meta Tags -->
     <title>DefaultSteering</title>
     <meta name="title" content="DefaultSteering">
-    <meta name="description" content="Developer Documentation">
+    <meta name="description" content="This plugin handles converting the steering offset from the lane detection models into a usable output for the game.">
 
     <!-- Canonical -->
     <link rel="canonical" href="https://wiki.tumppi066.fi/plugins/defaultsteering/">
@@ -20,22 +20,22 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://wiki.tumppi066.fi/plugins/defaultsteering/">
     <meta property="og:title" content="DefaultSteering">
-    <meta property="og:description" content="Developer Documentation">
+    <meta property="og:description" content="This plugin handles converting the steering offset from the lane detection models into a usable output for the game.">
 
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://wiki.tumppi066.fi/plugins/defaultsteering/">
     <meta property="twitter:title" content="DefaultSteering">
-    <meta property="twitter:description" content="Developer Documentation">
+    <meta property="twitter:description" content="This plugin handles converting the steering offset from the lane detection models into a usable output for the game.">
 
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../assets/favicon.ico" rel="icon">
-    <link href="../../resources/css/retype.css?v=3.5.0.760037444677" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.5.0.760038839353" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.760037444677" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.760038839353" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.760037444677" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.760038839353" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -218,9 +218,6 @@
     <div class="flex items-center shrink-0">Published&nbsp;<span>2024-01-31</span></div>
 </div>
 
-<p><a href="docs/" class="no-link inline-flex align-middle items-center font-medium cursor-pointer transition-colors duration-200 ease-out focus:outline-none bg-blue-500 hover:bg-blue-700 text-white px-4 h-10 text-sm rounded-md">
-    <span>Developer Documentation</span>
-</a></p>
 <doc-anchor-target id="description">
     <h3>
         <doc-anchor-trigger class="header-anchor-trigger" to="#description">#</doc-anchor-trigger>
@@ -369,6 +366,20 @@
 <p>Used for keyboard input</p>
    </doc-panel>
 </doc-panels>
+<doc-anchor-target id="requirements">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#requirements">#</doc-anchor-trigger>
+        <span>Requirements</span>
+    </h3>
+</doc-anchor-target>
+<p>This plugin needs and will enable the following plugins:</p>
+<doc-panel id="trucksimapi">
+    <template #title>TruckSimAPI</template>
+<p>Used to communicate with the game.</p>
+</doc-panel>
+<p><a href="docs/" class="no-link inline-flex align-middle items-center font-medium cursor-pointer transition-colors duration-200 ease-out focus:outline-none bg-blue-500 hover:bg-blue-700 text-white px-4 h-10 text-sm rounded-md">
+    <span>Developer Documentation</span>
+</a></p>
 
                                 <div class="flex items-center mt-6 mb-6 clear-both">
                                     <span>
@@ -377,6 +388,9 @@
                                         </a>
                                         <span class="mr-2"><a href="../../tags/plugin/" class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
                                     <span>plugin</span>
+                                </a></span>
+                                        <span class="mr-2"><a href="../../tags/before-controller/" class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
+                                    <span>before controller</span>
                                 </a></span>
                                     </span>
                                 </div>
