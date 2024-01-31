@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.760025835171">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.760028873167">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -31,12 +31,12 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../../assets/favicon.ico" rel="icon">
-    <link href="../../../resources/css/retype.css?v=3.5.0.760025835171" rel="stylesheet">
+    <link href="../../../resources/css/retype.css?v=3.5.0.760028873167" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../../resources/js/config.js?v=3.5.0.760025835171" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../../resources/js/config.js?v=3.5.0.760028873167" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=3.5.0.760025835171" data-turbo-eval="false" defer></script>
-    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=3.5.0.760025835171" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../../resources/js/lunr.js?v=3.5.0.760028873167" data-turbo-eval="false" defer></script>
+    <script id="prism-js" data-cfasync="false" src="../../../resources/js/prism.js?v=3.5.0.760028873167" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -243,11 +243,39 @@
     </h2>
 </doc-anchor-target>
 <p>The plugin will use the following data variable values:</p>
+<doc-panels>
+   <doc-panel id="data-frame">
+       <template #title>data/frame</template>
+<p>The cropped image frame defined by the settings.</p>
+   </doc-panel>
+   <doc-panel id="data-framefull">
+       <template #title>data/frameFull</template>
+<p>The full image from the display.</p>
+   </doc-panel>
+   <doc-panel id="data-frameoriginal">
+       <template #title>data/frameOriginal</template>
+<p>The original image. THIS SHOULD NOT BE EDITED!</p>
+   </doc-panel>
+</doc-panels>
+<doc-anchor-target id="example">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#example">#</doc-anchor-trigger>
+        <span>Example</span>
+    </h3>
+</doc-anchor-target>
 <div class="codeblock-wrapper"><doc-codeblock line-numbers>
-<pre class="language-python"><code v-pre class="language-python">def plugin(data):
-    data[&quot;frame&quot;] # The cropped image frame defined by the settings.
-    data[&quot;frameFull&quot;] # The full image from the display.
-    data[&quot;frameOriginal&quot;] # The original image. THIS SHOULD NOT BE EDITED!</code></pre>
+<pre class="language-python"><code v-pre class="language-python">import cv2
+def plugin(data):
+    frame = data[&quot;frame&quot;]
+    frameFull = data[&quot;frameFull&quot;]
+    frameOriginal = data[&quot;frameOriginal&quot;] # Frame original should not be edited!
+
+    # Most plugins will edit the frame value for the future. This is because the ShowImage plugin will show the final frame value.
+    frame = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY) # Make it grayscale for example
+
+    # Return the data variable
+    data[&quot;frame&quot;] = frame
+    return data</code></pre>
 </doc-codeblock></div>
 <doc-anchor-target id="directly-usable-functions-and-values">
     <h2>
