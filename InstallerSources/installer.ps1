@@ -3,8 +3,8 @@ $tempDir = New-Item -ItemType Directory -Path "$env:TEMP\ScriptOutput" -Force
 $tempDir -replace ' ', '` '
 $scriptDirectory = Split-Path -Parent -Path $MyInvocation.MyCommand.Definition
 $scriptDirectory = $scriptDirectory.Replace("\InstallerSources", "")
+
 # Specify the file names
-$installerbatFileName = "installer.bat"
 $installpyFileName = "installer.py"
 $uninstallerpsFileName = "uninstaller.ps1"
 $debugbatFileName = "debug.py"
@@ -13,7 +13,6 @@ $activatebatFileName = "activate.bat"
 $SteamParserpyFileName = "SteamParser.py"
 
 # Specify the path to the bat file
-$installerFilePath = Join-Path $tempDir $installerbatFileName
 $uninstallerFilePath = Join-Path $tempDir $uninstallerpsFileName
 $debugfilepath = Join-Path $tempDir $debugbatFileName
 $installpyFilePath = Join-Path $tempDir $installpyFileName
@@ -21,36 +20,6 @@ $updatebatFilePath = Join-Path $tempDir $updatebatFileName
 $activatebatFilePath = Join-Path $tempDir $activatebatFileName
 $SteamParserpyFilePath = Join-Path $tempDir $SteamParserpyFileName
 
-$installerdata = @"
-winget --version >nul 2>&1 || (
-    color 4 & echo WARNING, You do not have winget avialble on your system, This is most likely because your on a windows version older then 2004. Please update your windows install and try again.
-    pause
-    exit 0
-)
-
-git --version >nul 2>&1 || (
-    color 6 & echo Installing git, Please read and accept the windows smart screen prompt
-    winget install Git.Git
-    echo git is now installed
-)
-
-set python_version=cmd /k "python --version"
-
-if not python_version (python --version >nul 2>&1 || (
-        color 6 & echo Installing python, Please read and accept the windows smart screen prompt
-        winget install -e --id Python.Python.3.11
-        echo Python is now installed
-    ))
-
-python --version >nul 2>&1 || (
-    color 2 & echo Successfully install all requirements please re run installer.bat
-    pause
-    exit 0
-)
-python $installpyFilePath
-
-pause
-"@
 $uninstallerdataarray = '$tempDir =', "'$($tempDir)'", 
 '$scriptDirectory = ', "'$($scriptDirectory)'",
 @'
@@ -191,13 +160,26 @@ if ($confirmation -eq 'yes') {
         }   
     }
 
+    # REMOVE TEMP DIRECTORY
+    Write-Host ""
+    Write-Host "Removing temporary files..." -ForegroundColor Blue
+    try {
+        Get-ChildItem -Path $tempDir | ForEach-Object {
+            $files_removed += 1
+        }
+        Remove-Item -Path $tempDir -Recurse -Force -Confirm:$false
+        Write-Host "Temporary files removed!" -ForegroundColor Green
+    } catch {
+        Write-Host "Temporary files not found, already removed." -ForegroundColor Green
+    }
+
     # FINISH
     Write-Host ""
     Write-Host "Uninstallation complete." -ForegroundColor Green
     Write-Host "Found and removed $files_removed files." -ForegroundColor Green
-    Write-Host "The installer will now self destruct after you click enter." -ForegroundColor Green
+    Write-Host "The installer directory will now self destruct after you click enter." -ForegroundColor Green
     Pause
-    Remove-Item -Path "$path/menu.exe" -Force
+    Remove-Item -Path "$scriptDirectory" -Force
     exit
 } else {
     Write-Host "Aborting uninstallation."
@@ -327,7 +309,7 @@ def get_os_info():
             "logs": logs,
             "settings": settings,
             "pluginEnabled": app_enabled,
-            "additional": f"OS: {oss} \nOS Version: {osversion} \n\nApp version: {appversion} \nPython Version: {pythonversion} \nGit Version: {gitversion} \nDlls installed: \nInput_semantical: {input_semantical_found} \nScs-telemetry: {scs_telemetry_found} \nCPU: {cpu} GPU: {gpu}"
+            "additional": f"OS: {oss} \nOS Version: {osversion} \nApp version: {appversion} \nPython Version: {pythonversion} \nGit Version: {gitversion} \nDlls installed: \nInput_semantical: {input_semantical_found} \nScs-telemetry: {scs_telemetry_found} \nCPU: {cpu} GPU: {gpu}"
         }
     
     jsonDatadumped = json.dumps(jsonData, indent=4) 
@@ -549,7 +531,6 @@ Steps to installation :
     - Check for requirements.txt
     - Install the requirements
 4. Ask user for settings/preferences
-    - Theme
     - Shortucts
 
 """
@@ -764,7 +745,7 @@ states = {
         "Create .bat files",
     ],
     "Preferences": [
-        "Theme",
+        "Shortcuts",
     ],
     "Done!": [
         "",
@@ -1207,7 +1188,6 @@ if __name__ == "__main__":
 "@
 
 # Save the content to the bat file
-$installerdata | Set-Content -Path $installerFilePath
 $uninstallerdataarray[0] | Set-Content -Path $uninstallerFilePath -NoNewline
 $uninstallerdataarray[1] | Add-Content -Path $uninstallerFilePath
 $uninstallerdataarray[2] | Add-Content -Path $uninstallerFilePath -NoNewline
@@ -1225,16 +1205,27 @@ function RunScript($file) {
     $file_type = $file.Split(".")[1]
     $file_name = $file.Split(".")[0]
     $file_name = $file_name.TrimEnd(".")
-    Write-Host "Running $file_name Script"
+    Write-Host "Running $file_name Script" -ForegroundColor Green
 
+    try {
     Set-Location $tempDir
 
     if ($file_type -eq "bat") {
     Start-Process -FilePath "./$($file)"
-    } else {
+    } elseif ($file_type -eq "ps1") {
     Start-Process -FilePath "powershell.exe" -ArgumentList "-File $($file)"
+    } elseif ($file_type -eq "py") {
+    cmd.exe /c "python $file"
+    } else {
+    Write-Host "File type not supported. Please contact the developers for support." -ForegroundColor Red
     }
+
     Set-Location $scriptDirectory
+    Write-Host "Finished running $file_name Script" -ForegroundColor Green
+    }
+    catch {
+    Write-Host "An error occurred while running the script. Please contact the developers for support." -ForegroundColor Red
+    }
 }
 
 # Check if file exists
@@ -1246,9 +1237,16 @@ if (Test-Path -Path "app\profiles\installer_config.cfg") {
 else {
     if (-Not(Test-Path -Path "$scriptDirectory\app")) {
         $app_installed = $false
-        Write-Host "App does not exist. Click the installer button to install the app. Other buttons will not function until the app is installed."
+        Write-Host "App does not exist. Click the installer button to install the app. Other buttons will not function until the app is installed." -ForegroundColor Blue
+
+        # Create a warning window to ask if the user wants to install the app
+        $install_input = [System.Windows.Forms.MessageBox]::Show("The app is not installed. Would you like to install it?`nIf you click No, other buttons will not function, except Debug, until the app is installed.`nIf you click Yes, the app will be installed.`nNOTE: Please don't use debug unless you are asked by our support team.", "App Not Installed", [System.Windows.Forms.MessageBoxButtons]::yesno, [System.Windows.Forms.MessageBoxIcon]::Warning)
+        switch ($install_input) { 'Yes' {
+            RunScript("installer.py")
+            Exit
+        }
     }
-    else {
+    } else {
         # Create a new file
         $app_installed = $true
         New-Item -Path "app\profiles\installer_config.cfg" -Value "theme = dark" -ItemType File -Force | Out-Null
@@ -1349,7 +1347,7 @@ $InstallerButton.height = 45
 $InstallerButton.location = New-Object System.Drawing.Point(20,90)
 $InstallerButton.Font = 'Microsoft Sans Serif,12'
 $InstallerButton.ForeColor = "#FFFFFF"
-$InstallerButton.add_click({RunScript("installer.bat")})
+$InstallerButton.add_click({RunScript("installer.py")})
 $gui.controls.Add($InstallerButton)
 
 $UninstallerButton = New-Object system.Windows.Forms.Button
@@ -1383,14 +1381,8 @@ $DebugButton.height = 45
 $DebugButton.location = New-Object System.Drawing.Point(230,150)
 $DebugButton.Font = 'Microsoft Sans Serif,12'
 $DebugButton.ForeColor = "#FFFFFF"
-if ([System.Windows.Forms.Control]::IsKeyLocked('NumLock')) {
-    [System.Windows.Forms.MessageBox]::Show("Numlock bypass is on. Click the installer button to install the app. Other buttons will not function until the app is installed besides debug.", "Warning", [System.Windows.Forms.MessageBoxButtons]::OK, [System.Windows.Forms.MessageBoxIcon]::Warning)
-    $DebugButton.BackColor = "#077FFF"
-} else {
-    $DebugButton.Enabled = ButtonEnabled
-    $DebugButton.BackColor = ButtonColor
-}
-$DebugButton.add_click({python($debugfilepath)})
+$DebugButton.BackColor = "#0080FF"
+$DebugButton.add_click({RunScript("debug.py")})
 $gui.controls.Add($DebugButton)
 
 $ActivateButton = New-Object system.Windows.Forms.Button
@@ -1405,11 +1397,10 @@ $ActivateButton.Enabled = ButtonEnabled
 $ActivateButton.add_click({RunScript("activate.bat")})
 $gui.controls.Add($ActivateButton)
 
-# Display the fGUI
+# Display the GUI
 [void]$gui.ShowDialog()
 
 # Remove the bat files
-Remove-Item -Path $installerFilePath -Force
 Remove-Item -Path $uninstallerFilePath -Force
 Remove-Item -Path $debugfilepath -Force
 Remove-Item -Path $installpyFilePath -Force
