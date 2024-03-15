@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.763850437643">
+    <meta name="turbo-cache-control" content="no-cache" data-turbo-track="reload" data-track-token="3.5.0.763852798909">
 
     <!-- See retype.com -->
     <meta name="generator" content="Retype 3.5.0">
@@ -33,11 +33,11 @@
     <script data-cfasync="false">(function () { var el = document.documentElement, m = localStorage.getItem("doc_theme"), wm = window.matchMedia; if (m === "dark" || (!m && wm && wm("(prefers-color-scheme: dark)").matches)) { el.classList.add("dark") } else { el.classList.remove("dark") } })();</script>
 
     <link href="../../assets/favicon.ico" rel="icon">
-    <link href="../../resources/css/retype.css?v=3.5.0.763850437643" rel="stylesheet">
+    <link href="../../resources/css/retype.css?v=3.5.0.763852798909" rel="stylesheet">
 
-    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.763850437643" data-turbo-eval="false" defer></script>
+    <script data-cfasync="false" src="../../resources/js/config.js?v=3.5.0.763852798909" data-turbo-eval="false" defer></script>
     <script data-cfasync="false" src="../../resources/js/retype.js?v=3.5.0" data-turbo-eval="false" defer></script>
-    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.763850437643" data-turbo-eval="false" defer></script>
+    <script id="lunr-js" data-cfasync="false" src="../../resources/js/lunr.js?v=3.5.0.763852798909" data-turbo-eval="false" defer></script>
 </head>
 <body>
     <div id="docs-app" class="relative text-base antialiased text-gray-700 bg-white font-body dark:bg-dark-850 dark:text-dark-300">
@@ -219,9 +219,16 @@
           </div>
           <div class="ml-1 whitespace-nowrap text-gray-500 dark:text-dark-350"><a href="https://github.com/DylDevs">DylDev</a></div>
         </div>
+        <div>,</div>
+        <div class="ml-2 flex items-center">
+          <div class="shrink-0 w-8 h-8 overflow-hidden rounded-full">
+            <a href="https://github.com/Glas42"><img class="object-cover" src="https://avatars.githubusercontent.com/u/145870870?v=4"></a>
+          </div>
+          <div class="ml-1 whitespace-nowrap text-gray-500 dark:text-dark-350"><a href="https://github.com/Glas42">Glas42</a></div>
+        </div>
     </div>
     <div class="mx-2">&#9679;</div>
-    <div class="flex items-center shrink-0">Published&nbsp;<span>2024-02-18</span></div>
+    <div class="flex items-center shrink-0">Published&nbsp;<span>2024-03-15</span></div>
 </div>
 
 <doc-anchor-target id="description">
@@ -249,7 +256,7 @@
 <template #title>General</template>
 <doc-panel id="automatically-enable-cruise-control-when-available" collapsed>
     <template #title>Automatically enable cruise control when available</template>
-<p>Enabling this feature will automatically enable cruise control when lane assist is enabled and available.</p>
+<p>Enabling this feature will automatically enable in-game cruise control when you are fast enough (30kph).</p>
 </doc-panel>
 <doc-panel id="stop-the-truck-when-a-red-traffic-light-is-detected" collapsed>
     <template #title>Stop the truck when a red traffic light is detected</template>
@@ -266,7 +273,7 @@
         </div>
         <div class="pr-5 ml-3 w-full">
             <h5>Important</h5>
-<p>This feature will only work if TrafficlightDetection is enabled and set up. See the TrafficlightDetection plugin documentation for more information.</p>
+<p>This feature will only work if the TrafficLightDetection plugin is enabled and set up. See the TrafficLightDetection plugin documentation for more information.</p>
         </div>
     </div>
 </div>
@@ -287,11 +294,11 @@
         </div>
         <div class="pr-5 ml-3 w-full">
             <h5>Important</h5>
-<p>This feature will only work if TrafficlightDetection is enabled and set up. See the TrafficlightDetection plugin documentation for more information.</p>
+<p>This feature will only work if the TrafficLightDetection plugin is enabled and set up. See the TrafficLightDetection plugin documentation for more information.</p>
         </div>
     </div>
 </div>
-<p>Enabling this feature will automatically accelerate when a red traffic light turns green.</p>
+<p>Enabling this feature will automatically accelerate the truck back to the speed limit when a red traffic light turns green.</p>
 </doc-panel>
 <doc-panel id="automatically-accelerate-to-the-target-speed-even-when-the-truck-is-standing-still" collapsed>
     <template #title>Automatically accelerate to the target speed, even when the truck is standing still</template>
@@ -320,10 +327,27 @@
 </doc-panel>
 <doc-panel id="automatically-come-to-a-stop-and-enable-the-hazard-lights-if-no-lane-is-detected" collapsed>
     <template #title>Automatically come to a stop and enable the hazard lights if no lane is detected</template>
-<p>If no lane is detected, the truck will automatically come to stop and enable hazard flashers. this will prevent the truck from crashing into other vehicles. or onjects.</p>
+<div class="flex mb-6">
+    <div class="shrink-0 w-1 rounded-tl rounded-bl bg-yellow-500"></div>
+    <div class="flex w-full py-4 border border-l-0 border-gray-300 rounded-tr rounded-br doc-alert bg-white dark:bg-dark-700 dark:border-dark-700" role="alert">
+        <div class="flex items-center ml-4 h-7">
+            <svg xmlns="http://www.w3.org/2000/svg" class="mb-px text-yellow-500" width="22" height="22" viewBox="0 0 24 24" role="presentation">
+                <g fill="currentColor"><g>
+                    <path d="M22.48 15.59L14.01 1.45A2.968 2.968 0 0012.16.09c-.78-.19-1.58-.07-2.27.35-.41.25-.76.6-1.01 1.01v.01L.4 15.6c-.83 1.43-.33 3.27 1.1 4.1.45.26.95.4 1.48.4h16.95c.8-.01 1.55-.33 2.11-.9.56-.57.87-1.33.86-2.13a3.04 3.04 0 00-.42-1.48zm-1.87 2.21c-.19.19-.44.3-.69.3H2.99c-.17 0-.34-.05-.49-.13a.992.992 0 01-.37-1.35L10.6 2.48c.08-.14.2-.25.34-.33a.992.992 0 011.37.33l8.46 14.13c.09.15.13.32.13.49 0 .26-.1.51-.29.7z"></path>
+                    <path d="M11.45 12.1c.55 0 1-.45 1-1v-4c0-.55-.45-1-1-1s-1 .45-1 1v4c0 .56.45 1 1 1zM11.46 14.1c-.56 0-1 .45-1 1s.45 1 1 1 1-.45 1-1-.45-1-1-1z"></path>
+                </g></g>
+            </svg>
+        </div>
+        <div class="pr-5 ml-3 w-full">
+            <h5>Important</h5>
+<p>This feature will only work if the NavigationDetection plugin is enabled and set up. See the NavigationDetection plugin documentation for more information.</p>
+        </div>
+    </div>
+</div>
+<p>If no lane is detected, the truck will automatically come to stop and enable hazard flashers. This will prevent the truck from crashing into other vehicles or objects.</p>
 </doc-panel>
-<doc-panel id="shows-cruise-control-symbol-in-the-lane-assist-window-showimage-plugin" collapsed>
-    <template #title>Shows cruise control symbol in the Lane Assist window. (Showimage Plugin)</template>
+<doc-panel id="show-cruise-control-symbol-in-the-lane-assist-window-showimage-plugin" collapsed>
+    <template #title>Show cruise control symbol in the Lane Assist window. (ShowImage Plugin)</template>
 <p>Enabling this feature will show the cruise control symbol in the Lane Assist window. It will look like this:<br />
 <figure class="content-center">
     <img src="../../assets/cruisecontrol/cruisecontrol_on_set.png" alt="Cruise Control Symbol">
@@ -333,11 +357,11 @@
 </doc-panel>
 <doc-panel id="acceleration-strength-in-percent" collapsed>
     <template #title>Acceleration strength in percent (%)</template>
-<p>Strength of acceleration from 0 to 100. Choose wiith the slider or text box.</p>
+<p>Strength of acceleration from 0 to 100. This has only an effect when using the cruise control under 30kph. Choose wiith the slider or text box.</p>
 </doc-panel>
 <doc-panel id="brake-strength-in-percent" collapsed>
     <template #title>Brake strength in percent (%)</template>
-<p>Strength of braking from 0 to 100. Choose wiith the slider or text box.</p>
+<p>Strength of braking from 0 to 100. This is the brake strength used to stop the truck at red traffic lights. Choose wiith the slider or text box.</p>
 </doc-panel>
 </doc-tab>
 </doc-tabs>
@@ -350,11 +374,32 @@
 <doc-panels>
    <doc-panel id="trucksimapi">
        <template #title>TruckSimApi</template>
-<p>allows CruiseControl to get data from the game, including speed, and speed limit.</p>
+<p>Allows CruiseControl to get data from the game, including speed, and speed limit.</p>
    </doc-panel>
    <doc-panel id="sdkcontroller">
        <template #title>SDKController</template>
-<p>allows CruiseControl to send input to the game, including acceleration and brake.</p>
+<p>Allows CruiseControl to send input to the game, including acceleration and brake.</p>
+   </doc-panel>
+</doc-panels>
+<doc-anchor-target id="installation">
+    <h3>
+        <doc-anchor-trigger class="header-anchor-trigger" to="#installation">#</doc-anchor-trigger>
+        <span>Installation</span>
+    </h3>
+</doc-anchor-target>
+<p>This plugin will install the following python packages:</p>
+<doc-panels>
+   <doc-panel id="opencv-python">
+       <template #title>opencv-python</template>
+<p>Used for image processing, in this case we use it to show the cruise control symbol on the ShowImage frame.</p>
+   </doc-panel>
+   <doc-panel id="numpy">
+       <template #title>numpy</template>
+<p>Used for image processing, in this case we use it to create masks.</p>
+   </doc-panel>
+   <doc-panel id="ctypes">
+       <template #title>ctypes</template>
+<p>Used to detect if the user is in the game.</p>
    </doc-panel>
 </doc-panels>
 
@@ -365,9 +410,6 @@
                                         </a>
                                         <span class="mr-2"><a href="../../tags/plugin/" class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
                                     <span>plugin</span>
-                                </a></span>
-                                        <span class="mr-2"><a href="../../tags/lane-detection/" class="no-link inline-flex align-middle items-center justify-center font-medium leading-none whitespace-nowrap text-blue-500 dark:text-blue-400 border border-blue-500 dark:border-blue-400 hover:bg-blue-100 dark:hover:bg-transparent dark:hover:border-blue-200 dark:hover:text-blue-200 transition-colors duration-200 ease-out h-6 px-2 text-xs rounded-md">
-                                    <span>lane detection</span>
                                 </a></span>
                                     </span>
                                 </div>
