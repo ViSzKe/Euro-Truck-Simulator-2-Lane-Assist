@@ -198,6 +198,8 @@ import os
 import tkinter as tk
 from tkinter import ttk
 
+os.chdir("$scriptDirectory")
+
 def get_os_info():
     global oss
     global osversion
