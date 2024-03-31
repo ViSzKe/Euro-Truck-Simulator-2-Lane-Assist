@@ -6,4 +6,4 @@ echo Administrator mode enabled.
 echo Enabling powershell scripts for this console...
 powershell -command "Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope Process
 echo 'Done, opening script...'
-Powershell.exe -File  ./installer.ps1
+./installer.ps1
