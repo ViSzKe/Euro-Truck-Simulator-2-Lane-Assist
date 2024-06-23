@@ -1,1 +1,1 @@
-Fix for a problem with indicators when using NavigationDetectionAI.
+Try to fix mainUI root error on startup.
