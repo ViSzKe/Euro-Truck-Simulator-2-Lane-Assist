@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://wiki.tumppi066.fi/sitemap.xml.gz
+Sitemap: https://wiki.ets2la.com/sitemap.xml.gz
